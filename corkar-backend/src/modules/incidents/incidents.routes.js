@@ -1,0 +1,13 @@
+const express    = require('express');
+const router     = express.Router();
+const controller = require('./incidents.controller');
+const auth       = require('../../middlewares/auth.middleware');
+const adminOnly  = require('../../middlewares/role.middleware');
+
+router.use(auth);
+
+router.post('/',                  controller.create);
+router.get('/',      adminOnly,   controller.getAll);
+router.patch('/:id/estado', adminOnly, controller.updateEstado);
+
+module.exports = router;

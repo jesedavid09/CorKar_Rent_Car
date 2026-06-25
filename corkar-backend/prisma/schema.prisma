@@ -1,0 +1,168 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+enum Rol {
+  CLIENTE
+  ADMIN
+}
+
+enum EstadoVehiculo {
+  DISPONIBLE
+  RENTADO
+  MANTENIMIENTO
+  INACTIVO
+}
+
+enum Transmision {
+  AUTOMATICA
+  MANUAL
+}
+
+enum Combustible {
+  GASOLINA
+  DIESEL
+  ELECTRICO
+  HIBRIDO
+}
+
+enum EstadoReserva {
+  PENDIENTE
+  APROBADA
+  RECHAZADA
+  ACTIVA
+  COMPLETADA
+  CANCELADA
+}
+
+enum EstadoIncidente {
+  ABIERTO
+  EN_PROCESO
+  RESUELTO
+}
+
+model User {
+  id           String   @id @default(uuid())
+  nombre       String
+  apellido     String
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  telefono     String?
+  cedula       String   @unique
+  rol          Rol      @default(CLIENTE)
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  reservations Reservation[]
+
+  @@map("users")
+}
+
+model VehicleCategory {
+  id          String   @id @default(uuid())
+  nombre      String   @unique
+  descripcion String?
+
+  vehicles Vehicle[]
+
+  @@map("vehicle_categories")
+}
+
+model Vehicle {
+  id          String         @id @default(uuid())
+  categoryId  String         @map("category_id")
+  marca       String
+  modelo      String
+  anio        Int
+  placa       String         @unique
+  capacidad   Int
+  transmision Transmision
+  combustible Combustible
+  precioDia   Decimal        @map("precio_dia") @db.Decimal(10, 2)
+  estado      EstadoVehiculo @default(DISPONIBLE)
+  descripcion String?
+  createdAt   DateTime       @default(now()) @map("created_at")
+
+  category     VehicleCategory @relation(fields: [categoryId], references: [id])
+  images       VehicleImage[]
+  reservations Reservation[]
+
+  @@map("vehicles")
+}
+
+model VehicleImage {
+  id        String  @id @default(uuid())
+  vehicleId String  @map("vehicle_id")
+  url       String
+  isPrimary Boolean @default(false) @map("is_primary")
+  orden     Int     @default(0)
+
+  vehicle Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  @@map("vehicle_images")
+}
+
+model Reservation {
+  id          String        @id @default(uuid())
+  userId      String        @map("user_id")
+  vehicleId   String        @map("vehicle_id")
+  fechaInicio DateTime      @map("fecha_inicio") @db.Date
+  fechaFin    DateTime      @map("fecha_fin") @db.Date
+  diasTotal   Int           @map("dias_total")
+  costoTotal  Decimal       @map("costo_total") @db.Decimal(10, 2)
+  estado      EstadoReserva @default(PENDIENTE)
+  notas       String?
+  createdAt   DateTime      @default(now()) @map("created_at")
+
+  user      User       @relation(fields: [userId], references: [id])
+  vehicle   Vehicle    @relation(fields: [vehicleId], references: [id])
+  incidents Incident[]
+  quotation Quotation?
+  contract  Contract?
+
+  @@map("reservations")
+}
+
+model Incident {
+  id            String          @id @default(uuid())
+  reservationId String          @map("reservation_id")
+  tipo          String
+  descripcion   String
+  fotoUrl       String?         @map("foto_url")
+  estado        EstadoIncidente @default(ABIERTO)
+  createdAt     DateTime        @default(now()) @map("created_at")
+
+  reservation Reservation @relation(fields: [reservationId], references: [id])
+
+  @@map("incidents")
+}
+
+model Quotation {
+  id            String   @id @default(uuid())
+  reservationId String   @unique @map("reservation_id")
+  monto         Decimal  @db.Decimal(10, 2)
+  fechaVence    DateTime @map("fecha_vence") @db.Date
+  pdfUrl        String?  @map("pdf_url")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  reservation Reservation @relation(fields: [reservationId], references: [id])
+
+  @@map("quotations")
+}
+
+model Contract {
+  id            String   @id @default(uuid())
+  reservationId String   @unique @map("reservation_id")
+  pdfUrl        String?  @map("pdf_url")
+  fechaFirma    DateTime @map("fecha_firma") @db.Date
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  reservation Reservation @relation(fields: [reservationId], references: [id])
+
+  @@map("contracts")
+}
