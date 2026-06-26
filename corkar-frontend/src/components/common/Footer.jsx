@@ -1,15 +1,20 @@
-import { Link } from "react-router-dom";
-import { Car, Phone, Mail, MapPin } from "lucide-react";
+import { Link }    from 'react-router-dom';
+import { Phone, Mail, MapPin } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import logo        from '../../assets/images/logo2.png';
 
 const Footer = () => {
+  const { isAuthenticated } = useAuth();
+
   return (
     <footer className="bg-[#111827] text-gray-400 mt-auto">
       <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+
         {/* Columna 1 — Marca */}
         <div>
           <div className="mb-4">
             <img
-              src="/src/assets/images/logo2.png"
+              src={logo}
               alt="CorKar Rent Car"
               className="h-14 w-auto object-contain brightness-0 invert"
             />
@@ -24,32 +29,17 @@ const Footer = () => {
         <div>
           <h4 className="text-white font-semibold mb-4">Navegación</h4>
           <ul className="space-y-2 text-sm">
-            <li>
-              <Link to="/" className="hover:text-white transition-colors">
-                Inicio
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/catalogo"
-                className="hover:text-white transition-colors"
-              >
-                Catálogo de vehículos
-              </Link>
-            </li>
-            <li>
-              <Link to="/login" className="hover:text-white transition-colors">
-                Iniciar sesión
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/registro"
-                className="hover:text-white transition-colors"
-              >
-                Registrarse
-              </Link>
-            </li>
+            <li><Link to="/"         className="hover:text-white transition-colors">Inicio</Link></li>
+            <li><Link to="/catalogo" className="hover:text-white transition-colors">Catálogo de vehículos</Link></li>
+            {!isAuthenticated && (
+              <>
+                <li><Link to="/login"    className="hover:text-white transition-colors">Iniciar sesión</Link></li>
+                <li><Link to="/registro" className="hover:text-white transition-colors">Registrarse</Link></li>
+              </>
+            )}
+            {isAuthenticated && (
+              <li><Link to="/mis-reservas" className="hover:text-white transition-colors">Mis Reservas</Link></li>
+            )}
           </ul>
         </div>
 
@@ -65,13 +55,9 @@ const Footer = () => {
               <Mail size={14} className="text-[#8B0000]" />
               <span>corkarrentcar@gmail.com</span>
             </li>
-            <li className="flex items-center gap-2">
-              <MapPin size={35} className="text-[#8B0000]" />
-              <span>
-                Av. Marginal de Las Américas, k.m. 9, Olympus Motor, Tropical
-                del Este, Santo Domingo Este, Santo Domingo, República
-                Dominicana
-              </span>
+            <li className="flex items-start gap-2">
+              <MapPin size={14} className="text-[#8B0000] mt-0.5 flex-shrink-0" />
+              <span>Av. Marginal de Las Américas, k.m. 9, Olympus Motor, Tropical del Este, Santo Domingo Este, Santo Domingo, República Dominicana</span>
             </li>
           </ul>
         </div>
@@ -79,8 +65,7 @@ const Footer = () => {
 
       {/* Barra inferior */}
       <div className="border-t border-gray-800 py-4 text-center text-xs">
-        © {new Date().getFullYear()} CorKar Rent Car. Todos los derechos
-        reservados.
+        © {new Date().getFullYear()} CorKar Rent Car. Todos los derechos reservados.
       </div>
     </footer>
   );

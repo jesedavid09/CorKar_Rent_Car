@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Link, NavLink }       from 'react-router-dom';
+import { useState, useEffect, use } from 'react';
+import { Link, NavLink, useLocation }       from 'react-router-dom';
 import { Menu, X }             from 'lucide-react';
 import { useAuth }             from '../../context/AuthContext';
 import logo                    from '../../assets/images/logo2.png';
@@ -8,6 +8,10 @@ const Navbar = () => {
   const { isAuthenticated, isAdmin, user, logoutUser } = useAuth();
   const [menuOpen,    setMenuOpen]    = useState(false);
   const [scrolled,   setScrolled]    = useState(false);
+  const location = useLocation();
+
+  // El navbar transparente solo aplica en la página de inicio
+  const isHomePage = location.pathname === '/';
 
   // Detecta el scroll para cambiar el estilo del navbar
   useEffect(() => {
@@ -19,13 +23,13 @@ const Navbar = () => {
   }, []);
 
   // Estilos dinámicos según scroll y página
-  const navBg = scrolled
+  const navBg = !isHomePage || scrolled
     ? 'bg-white shadow-md border-b border-gray-200'
     : 'bg-transparent';
 
   const linkClass = ({ isActive }) => `
     text-sm font-medium px-3 py-2 rounded-lg border transition-all duration-200
-    ${scrolled
+    ${!isHomePage || scrolled
       ? isActive
         ? 'text-[#8B0000] border-[#8B0000] bg-red-50'
         : 'text-gray-700 border-transparent hover:text-[#8B0000] hover:border-[#8B0000] hover:bg-red-50'
@@ -35,9 +39,9 @@ const Navbar = () => {
     }
   `;
 
-  const textColor    = scrolled ? 'text-gray-500' : 'text-white/80';
-  const nameColor    = scrolled ? 'text-gray-700' : 'text-white';
-  const burgerColor  = scrolled ? 'text-gray-700' : 'text-white';
+  const textColor    = !isHomePage || scrolled ? 'text-gray-500' : 'text-white/80';
+  const nameColor    = !isHomePage || scrolled ? 'text-gray-700' : 'text-white';
+  const burgerColor  = !isHomePage || scrolled ? 'text-gray-700' : 'text-white';
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navBg}`}>
@@ -50,7 +54,7 @@ const Navbar = () => {
               src={logo}
               alt="CorKar Rent Car"
               className={`h-15 w-auto object-contain transition-all duration-300 ${
-                scrolled ? '' : 'brightness-0 invert'
+                !isHomePage || scrolled ? '' : 'brightness-0 invert'
               }`}
             />
           </Link>
@@ -73,7 +77,7 @@ const Navbar = () => {
                   <button
                     onClick={logoutUser}
                     className={`text-sm font-medium px-4 py-2 rounded-lg border-2 transition-all duration-200 ${
-                      scrolled
+                      !isHomePage || scrolled
                         ? 'border-[#8B0000] text-[#8B0000] hover:bg-[#8B0000] hover:text-white'
                         : 'border-white text-white hover:bg-white hover:text-[#8B0000]'
                     }`}
@@ -88,7 +92,7 @@ const Navbar = () => {
                 <Link
                   to="/registro"
                   className={`text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200 ${
-                    scrolled
+                    !isHomePage || scrolled
                       ? 'bg-[#8B0000] text-white hover:bg-[#6B0000]'
                       : 'bg-white text-[#8B0000] hover:bg-gray-100'
                   }`}
