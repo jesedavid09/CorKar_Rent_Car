@@ -69,3 +69,16 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
 });
+
+// Ruta para obtener categorías de vehículos
+app.get('/api/vehicle-categories', async (req, res) => {
+  const prisma = require('./config/prisma');
+  try {
+    const categories = await prisma.vehicleCategory.findMany({
+      orderBy: { nombre: 'asc' }
+    });
+    res.json(categories);
+  } catch (error) {
+    res.status(500).json({ error: 'Error obteniendo categorías' });
+  }
+});
