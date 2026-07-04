@@ -7,7 +7,7 @@ const HomePage = () => {
   return (
     <div className="flex flex-col">
       {/* ── HERO ─────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex items-center justify-center text-white overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center text-white overflow-hidden -mt-16">
         {/* Imagen de fondo */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"

@@ -25,10 +25,10 @@ const AdminLayout = ({ children }) => {
   const { logoutUser, user } = useAuth();
 
   return (
-    <div className="min-h-screen flex bg-gray-50 pt-16">
+    <div className="min-h-screen flex bg-gray-50">
 
       {/* Sidebar */}
-      <aside className="w-56 bg-[#111827] fixed top-16 left-0 bottom-0 flex flex-col z-40">
+      <aside className="w-56 bg-[#111827] fixed top-0 left-0 bottom-0 flex flex-col z-40">
 
         {/* Logo / Título */}
         <div className="px-4 py-5 border-b border-white/10">
