@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Shield, Clock, MapPin, Star } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
+import heroBg from '../../assets/images/hero-bg.jpg';
 
 const HomePage = () => {
   const { isAuthenticated } = useAuth();
@@ -11,7 +12,7 @@ const HomePage = () => {
         {/* Imagen de fondo */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/hero-bg.jpg')" }}
+          style={{ backgroundImage: `url(${heroBg})` }}
         />
 
         {/* Overlay oscuro para legibilidad */}
