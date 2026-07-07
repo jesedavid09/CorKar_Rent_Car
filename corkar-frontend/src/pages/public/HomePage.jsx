@@ -11,7 +11,7 @@ const HomePage = () => {
         {/* Imagen de fondo */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/src/assets/images/hero-bg.jpg')" }}
+          style={{ backgroundImage: "url('/hero-bg.jpg')" }}
         />
 
         {/* Overlay oscuro para legibilidad */}
