@@ -89,7 +89,7 @@ const VehicleDetailPage = () => {
                 <img
                   src={selectedImg}
                   alt={`${vehicle.marca} ${vehicle.modelo}`}
-                  className="w-full h-80 object-cover"
+                  className="w-full h-[500px] object-contain bg-white"
                 />
               ) : (
                 <div className="w-full h-80 bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col items-center justify-center gap-3">
@@ -116,7 +116,7 @@ const VehicleDetailPage = () => {
                         : 'border-gray-200 hover:border-gray-400'
                     }`}
                   >
-                    <img src={img.url} alt="" className="w-full h-full object-cover" />
+                    <img src={img.url} alt="" className="w-full h-full object-contain bg-white" />
                   </button>
                 ))}
               </div>

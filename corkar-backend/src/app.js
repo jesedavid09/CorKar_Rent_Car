@@ -40,6 +40,20 @@ app.use('/api/vehicles', require('./modules/vehicles/vehicles.routes'));
 app.use('/api/reservations', require('./modules/reservations/reservations.routes'));
 app.use('/api/incidents', require('./modules/incidents/incidents.routes'));
 app.use('/api/documents', require('./modules/documents/documents.routes'));
+app.use('/api/images', require('./modules/images/images.routes'));
+
+// Ruta para obtener categorías de vehículos
+app.get('/api/vehicle-categories', async (req, res) => {
+  const prisma = require('./config/prisma');
+  try {
+    const categories = await prisma.vehicleCategory.findMany({
+      orderBy: { nombre: 'asc' }
+    });
+    res.json(categories);
+  } catch (error) {
+    res.status(500).json({ error: 'Error obteniendo categorías' });
+  }
+});
 
 // ── Health Check ──────────────────────────────────────────────
 // Ruta pública que confirma que el servidor está activo.
@@ -68,17 +82,4 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
-});
-
-// Ruta para obtener categorías de vehículos
-app.get('/api/vehicle-categories', async (req, res) => {
-  const prisma = require('./config/prisma');
-  try {
-    const categories = await prisma.vehicleCategory.findMany({
-      orderBy: { nombre: 'asc' }
-    });
-    res.json(categories);
-  } catch (error) {
-    res.status(500).json({ error: 'Error obteniendo categorías' });
-  }
 });

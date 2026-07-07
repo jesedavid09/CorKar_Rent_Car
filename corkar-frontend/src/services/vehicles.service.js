@@ -34,3 +34,23 @@ export const deleteVehicle = async (id) => {
     const response = await api.delete(`/vehicles/${id}`);
     return response.data;
 };
+
+// Subir imagen de vehículo
+export const uploadVehicleImage = async (vehicleId, formData) => {
+  const response = await api.post(`/images/vehicles/${vehicleId}`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  });
+  return response.data;
+};
+
+// Eliminar imagen
+export const deleteVehicleImage = async (imageId) => {
+  const response = await api.delete(`/images/${imageId}`);
+  return response.data;
+};
+
+// Marcar imagen como principal
+export const setImageAsPrimary = async (imageId) => {
+  const response = await api.patch(`/images/${imageId}/primary`);
+  return response.data;
+};

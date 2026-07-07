@@ -21,12 +21,12 @@ const VehicleCard = ({ vehicle }) => {
     <div className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md hover:border-[#8B0000]/30 transition-all duration-200 overflow-hidden group">
 
       {/* Imagen */}
-      <div className="relative h-48 bg-gray-100 overflow-hidden">
+      <div className="relative h-56 bg-gray-100 overflow-hidden">
         {imagen ? (
           <img
             src={imagen}
             alt={`${vehicle.marca} ${vehicle.modelo}`}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-contain bg-white group-hover:scale-105 transition-transform duration-300"
           />
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-gray-100 to-gray-200">
