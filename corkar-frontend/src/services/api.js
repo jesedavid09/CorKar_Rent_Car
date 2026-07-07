@@ -14,7 +14,7 @@ import axios from 'axios';
 
 // URL base del backend. En desarrollo apunta a localhost.
 // En producción cambiaremos esto a la URL de Render/Railway.
-const API_URL = 'http://localhost:3000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 // Creamos la instancia de Axios con configuración base
 const api = axios.create({
