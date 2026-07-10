@@ -12,17 +12,22 @@
 
 const { PrismaClient } = require('../../generated/prisma');
 const { PrismaPg }     = require('@prisma/adapter-pg');
+const { Pool }         = require('pg');
 
 // PrismaPg es el adaptador nativo de PostgreSQL para Prisma 11.
 // Recibe la URL de conexión desde las variables de entorno (.env).
 // Formato: postgresql://USUARIO:CONTRASEÑA@HOST:PUERTO/NOMBRE_BD
-const adapter = new PrismaPg({ 
-  connectionString: process.env.DATABASE_URL 
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.DATABASE_URL?.includes('render.com')
+    ? { rejectUnauthorized: false }
+    : false
 });
 
 // Creamos el cliente pasándole el adaptador nativo.
 // Este cliente expone todos los modelos del schema como propiedades:
 // prisma.user, prisma.vehicle, prisma.reservation, etc.
-const prisma = new PrismaClient({ adapter });
+const adapter = new PrismaPg(pool);
+const prisma  = new PrismaClient({ adapter });
 
 module.exports = prisma;
