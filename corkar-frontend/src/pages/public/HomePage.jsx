@@ -11,7 +11,7 @@ const HomePage = () => {
         {/* Imagen de fondo */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url(https://res.cloudinary.com/tyycka6w/image/upload/v1783803260/hero-bg_sij7om.jpg)" }}
+          style={{ backgroundImage: "url('https://res.cloudinary.com/tyycka6w/image/upload/v1783803260/hero-bg_sij7om.jpg')" }}
         />
 
         {/* Overlay oscuro para legibilidad */}
