@@ -89,7 +89,7 @@ const VehicleDetailPage = () => {
                 <img
                   src={selectedImg}
                   alt={`${vehicle.marca} ${vehicle.modelo}`}
-                  className="w-full h-[500px] object-contain bg-white"
+                  className="w-full h-auto max-h-[500px] object-contain bg-white"
                 />
               ) : (
                 <div className="w-full h-80 bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col items-center justify-center gap-3">
