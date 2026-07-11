@@ -12,7 +12,7 @@ import {
   Users, AlertTriangle, LogOut, Menu, X
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import logo        from '../../assets/images/logo.png';
+import logo        from '../../assets/images/logo2.png';
 
 const menuItems = [
   { to: '/admin',            icon: <LayoutDashboard size={18} />, label: 'Dashboard'   },
