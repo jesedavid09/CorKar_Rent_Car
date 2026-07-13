@@ -84,12 +84,12 @@ const VehicleDetailPage = () => {
           <div className="lg:col-span-2 flex flex-col gap-6">
 
             {/* Imagen principal */}
-            <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+            <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden flex items-center justify-center">
               {selectedImg ? (
                 <img
                   src={selectedImg}
                   alt={`${vehicle.marca} ${vehicle.modelo}`}
-                  className="w-full h-auto max-h-[500px] object-contain bg-white"
+                  className="w-full h-auto object-cover"
                 />
               ) : (
                 <div className="w-full h-80 bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col items-center justify-center gap-3">
