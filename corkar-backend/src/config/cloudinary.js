@@ -22,7 +22,7 @@ const storage = new CloudinaryStorage({
   params: {
     folder:         'corkar/vehicles', // Carpeta en Cloudinary
     allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
-    transformation: [{ width: 800, height: 600, crop: 'fill', quality: 'auto' }],
+    transformation: [{ quality: 'auto', fetch_format: 'auto' }],
   },
 });
 
