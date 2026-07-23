@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  corkar-backend:
+    build:
+      context: ./corkar-backend
+      dockerfile: Dockerfile
+    container_name: corkar-backend
+    restart: always
+    expose:
+      - "3000"
+    env_file:
+      - .env
+    networks:
+      - homelab
+
+networks:
+  homelab:
+    external: true
